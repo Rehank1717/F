@@ -33,6 +33,7 @@
             position: relative;
             background-color: #f3f3f3;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            transition: transform 3s ease-in-out;
         }
         .wheel span {
             font-size: 24px;
@@ -70,7 +71,7 @@
 </head>
 <body>
     <div class="container">
-        <div class="wheel">
+        <div class="wheel" id="wheel">
             <span id="wheel-number">1 - 1000</span>
         </div>
         <button class="btn" onclick="generateNumber()">Spin the Wheel!</button>
@@ -84,15 +85,18 @@
             // Disable the button while the wheel is spinning
             document.querySelector('.btn').disabled = true;
 
-            // Start spinning animation
-            document.querySelector('.wheel').style.animation = "spin 3s infinite linear";
+            // Add spin animation with a random rotation for a cool effect
+            let randomDeg = Math.floor(Math.random() * 360) + 1800; // A large number of rotations
+            document.querySelector('.wheel').style.transition = "transform 3s cubic-bezier(0.2, 1, 0.22, 1)";
+            document.querySelector('.wheel').style.transform = `rotate(${randomDeg}deg)`;
             
             // Simulate spinning by generating a random number between 1 and 1000
             setTimeout(() => {
                 let randomNum = Math.floor(Math.random() * 1000) + 1;
 
                 // Stop spinning animation after the random number is generated
-                document.querySelector('.wheel').style.animation = "none";
+                document.querySelector('.wheel').style.transition = "none";
+                document.querySelector('.wheel').style.transform = `rotate(${randomDeg}deg)`; // Ensure the final degree after rotation
                 document.getElementById('result').innerText = `You rolled: ${randomNum}`;
 
                 // Update the number inside the wheel
@@ -110,16 +114,5 @@
             }, 3000); // 3 seconds delay to match the spinning animation
         }
     </script>
-
-    <style>
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-    </style>
 </body>
 </html>
