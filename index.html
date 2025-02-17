@@ -1,118 +1,116 @@
-<!DOCTYPE html>
+            <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RNG Wheel</title>
-    <style>
-        body {
-            background: url('https://example.com/mango_honey_background.jpg') repeat;
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-size: 50px 50px;
-            text-align: center;
-            color: white;
-        }
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .wheel {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            border: 10px solid #ffcc00;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            background-color: #f3f3f3;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            transition: transform 3s ease-in-out;
-        }
-        .wheel span {
-            font-size: 24px;
-            color: #ffcc00;
-            font-weight: bold;
-        }
-        .btn {
-            background-color: #ffcc00;
-            color: black;
-            padding: 15px 30px;
-            font-size: 20px;
-            border: none;
-            cursor: pointer;
-            margin-top: 30px;
-            border-radius: 8px;
-        }
-        .btn:hover {
-            background-color: #ffa500;
-        }
-        #result {
-            font-size: 24px;
-            font-weight: bold;
-            padding: 20px;
-            border-radius: 10px;
-            margin-top: 20px;
-        }
-        #winning-message {
-            color: green;
-            font-size: 26px;
-            font-weight: bold;
-            margin-top: 20px;
-            display: none;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RNG Wheel with Ice Cream Background</title>
+  <style>
+    body {
+      /* Use the provided direct image URL as the background */
+      background: url('https://media.istockphoto.com/id/1405543709/photo/colorful-ice-cream-balls-on-table.jpg?s=612x612&w=0&k=20&c=GuZj0JUqpoSPa4Hjxiuw-A5xs4BNgTJIGOl7Fww6eqQ=') no-repeat center center fixed;
+      background-size: cover;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      text-align: center;
+      color: white;
+    }
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .wheel {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      border: 10px solid #ffcc00;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      background-color: #f3f3f3;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      transition: transform 3s cubic-bezier(0.2, 1, 0.22, 1);
+    }
+    .wheel span {
+      font-size: 24px;
+      color: #ffcc00;
+      font-weight: bold;
+    }
+    .btn {
+      background-color: #ffcc00;
+      color: black;
+      padding: 15px 30px;
+      font-size: 20px;
+      border: none;
+      cursor: pointer;
+      margin-top: 30px;
+      border-radius: 8px;
+    }
+    .btn:hover {
+      background-color: #ffa500;
+    }
+    #result {
+      font-size: 24px;
+      font-weight: bold;
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 20px;
+    }
+    #winning-message {
+      color: green;
+      font-size: 26px;
+      font-weight: bold;
+      margin-top: 20px;
+      display: none;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <div class="wheel" id="wheel">
-            <span id="wheel-number">1 - 1000</span>
-        </div>
-        <button class="btn" onclick="generateNumber()">Spin the Wheel!</button>
-        <div id="result"></div>
-        <div id="winning-message">Congratulations! You won!</div>
+  <div class="container">
+    <div class="wheel" id="wheel">
+      <span id="wheel-number">1 - 500</span>
     </div>
+    <button class="btn" onclick="generateNumber()">Spin the Wheel!</button>
+    <div id="result"></div>
+    <div id="winning-message">Congratulations! You won!</div>
+  </div>
 
-    <script>
-        // Ensure the JavaScript function works
-        function generateNumber() {
-            // Disable the button while the wheel is spinning
-            document.querySelector('.btn').disabled = true;
-
-            // Add spin animation with a random rotation for a cool effect
-            let randomDeg = Math.floor(Math.random() * 360) + 1800; // A large number of rotations
-            document.querySelector('.wheel').style.transition = "transform 3s cubic-bezier(0.2, 1, 0.22, 1)";
-            document.querySelector('.wheel').style.transform = `rotate(${randomDeg}deg)`;
-            
-            // Simulate spinning by generating a random number between 1 and 1000
-            setTimeout(() => {
-                let randomNum = Math.floor(Math.random() * 1000) + 1;
-
-                // Stop spinning animation after the random number is generated
-                document.querySelector('.wheel').style.transition = "none";
-                document.querySelector('.wheel').style.transform = `rotate(${randomDeg}deg)`; // Ensure the final degree after rotation
-                document.getElementById('result').innerText = `You rolled: ${randomNum}`;
-
-                // Update the number inside the wheel
-                document.getElementById('wheel-number').innerText = randomNum;
-
-                // Show winning message if the random number is 171
-                if (randomNum === 171) {
-                    document.getElementById('winning-message').style.display = 'block';
-                } else {
-                    document.getElementById('winning-message').style.display = 'none';
-                }
-
-                // Enable the button again after the wheel stops spinning
-                document.querySelector('.btn').disabled = false;
-            }, 3000); // 3 seconds delay to match the spinning animation
+  <script>
+    function generateNumber() {
+      // Disable the button while the wheel is spinning
+      document.querySelector('.btn').disabled = true;
+      
+      // Generate a random rotation between 1800 and 2160 degrees for a cool spin effect
+      let randomDeg = Math.floor(Math.random() * 360) + 1800;
+      document.querySelector('.wheel').style.transition = "transform 3s cubic-bezier(0.2, 1, 0.22, 1)";
+      document.querySelector('.wheel').style.transform = `rotate(${randomDeg}deg)`;
+      
+      // Wait for the spinning animation to complete
+      setTimeout(() => {
+        let randomNum = Math.floor(Math.random() * 500) + 1;
+        
+        // Maintain the final rotation state and update the wheel number
+        document.querySelector('.wheel').style.transition = "none";
+        document.querySelector('.wheel').style.transform = `rotate(${randomDeg}deg)`;
+        document.getElementById('wheel-number').innerText = randomNum;
+        document.getElementById('result').innerText = `You rolled: ${randomNum}`;
+        
+        // Show winning message if the random number is 171
+        if (randomNum === 171) {
+          document.getElementById('winning-message').style.display = 'block';
+        } else {
+          document.getElementById('winning-message').style.display = 'none';
         }
-    </script>
+        
+        // Re-enable the button after the spin completes
+        document.querySelector('.btn').disabled = false;
+      }, 3000);
+    }
+  </script>
 </body>
 </html>
