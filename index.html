@@ -22,6 +22,25 @@
             flex-direction: column;
             align-items: center;
         }
+        .wheel {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 10px solid #ffcc00;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            background-color: #f3f3f3;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        .wheel:before {
+            content: 'SPIN';
+            font-size: 24px;
+            color: #ffcc00;
+            font-weight: bold;
+            position: absolute;
+        }
         .btn {
             background-color: #ffcc00;
             color: black;
@@ -29,7 +48,7 @@
             font-size: 20px;
             border: none;
             cursor: pointer;
-            margin-bottom: 20px;
+            margin-top: 30px;
             border-radius: 8px;
         }
         .btn:hover {
@@ -40,37 +59,65 @@
             font-weight: bold;
             padding: 20px;
             border-radius: 10px;
+            margin-top: 20px;
         }
         #winning-message {
             color: green;
             font-size: 26px;
             font-weight: bold;
             margin-top: 20px;
+            display: none;
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <div class="wheel">
+            <div>1-1000</div>
+        </div>
         <button class="btn" onclick="generateNumber()">Spin the Wheel!</button>
         <div id="result"></div>
-        <div id="winning-message" style="display:none;">Congratulations! You won!</div>
+        <div id="winning-message">Congratulations! You won!</div>
     </div>
 
     <script>
         function generateNumber() {
-            // Generate a random number between 1 and 1000
-            let randomNum = Math.floor(Math.random() * 1000) + 1;
+            // Disable the button while the wheel is spinning
+            document.querySelector('.btn').disabled = true;
 
-            // Display the result
-            document.getElementById('result').innerText = `You rolled: ${randomNum}`;
+            // Start spinning animation
+            document.querySelector('.wheel').style.animation = "spin 3s infinite linear";
+            
+            // Simulate spinning by generating a random number between 1 and 1000
+            setTimeout(() => {
+                let randomNum = Math.floor(Math.random() * 1000) + 1;
 
-            // Check if the number is 171
-            if (randomNum === 171) {
-                document.getElementById('winning-message').style.display = 'block';
-            } else {
-                document.getElementById('winning-message').style.display = 'none';
-            }
+                // Stop spinning animation after the random number is generated
+                document.querySelector('.wheel').style.animation = "none";
+                document.getElementById('result').innerText = `You rolled: ${randomNum}`;
+
+                // Show winning message if the random number is 171
+                if (randomNum === 171) {
+                    document.getElementById('winning-message').style.display = 'block';
+                } else {
+                    document.getElementById('winning-message').style.display = 'none';
+                }
+
+                // Enable the button again after the wheel stops spinning
+                document.querySelector('.btn').disabled = false;
+            }, 3000); // 3 seconds delay to match the spinning animation
         }
     </script>
+
+    <style>
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
 </body>
 </html>
