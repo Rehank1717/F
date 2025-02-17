@@ -33,7 +33,6 @@
       position: relative;
       background-color: #f3f3f3;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-      transition: transform 1.5s linear; /* Fast and consistent spin */
     }
     .wheel span {
       font-size: 24px;
@@ -74,50 +73,60 @@
     <div class="wheel" id="wheel">
       <span id="wheel-number">1 - 500</span>
     </div>
-    <button class="btn" onclick="generateNumber()">Spin the Wheel!</button>
+    <button class="btn" id="spin-btn" onclick="generateNumber()">Spin the Wheel!</button>
     <div id="result"></div>
     <div id="winning-message">Congratulations! You won!</div>
+    <div id="time-left" style="color: red; font-size: 20px; margin-top: 20px;"></div>
   </div>
 
   <script>
+    let lastSpinTime = localStorage.getItem('lastSpinTime'); // Get the time of the last spin from localStorage
+    let cooldown = 5 * 60 * 1000; // 5 minutes in milliseconds
+
+    function updateCooldown() {
+      const currentTime = Date.now();
+      const timeRemaining = lastSpinTime ? cooldown - (currentTime - lastSpinTime) : 0;
+      const minutesRemaining = Math.max(0, Math.floor(timeRemaining / 60000));
+      const secondsRemaining = Math.max(0, Math.floor((timeRemaining % 60000) / 1000));
+
+      document.getElementById('time-left').innerText = `Time left to spin: ${minutesRemaining}m ${secondsRemaining}s`;
+
+      if (timeRemaining <= 0) {
+        // If cooldown is over, enable the button
+        document.getElementById('spin-btn').disabled = false;
+      } else {
+        // Disable the button during cooldown
+        document.getElementById('spin-btn').disabled = true;
+      }
+    }
+
     function generateNumber() {
-      // Disable the button while the wheel is spinning
-      document.querySelector('.btn').disabled = true;
+      // Disable the button for 5 minutes after the spin
+      document.getElementById('spin-btn').disabled = true;
 
       // Generate a random number between 1 and 500
       let randomNum = Math.floor(Math.random() * 500) + 1;
 
-      // Calculate the segment index (number 1 - 500)
-      let segmentCount = 8;
-      let randomSegment = Math.floor(Math.random() * segmentCount);
+      // Display the result
+      document.getElementById('wheel-number').innerText = randomNum;
+      document.getElementById('result').innerText = `You rolled: ${randomNum}`;
 
-      // The rotation needs to be a multiple of 45 degrees
-      let rotationDegree = 45 * randomSegment;
+      // Show winning message if the random number is 171
+      if (randomNum === 171) {
+        document.getElementById('winning-message').style.display = 'block';
+      } else {
+        document.getElementById('winning-message').style.display = 'none';
+      }
 
-      // Make the wheel spin 3 full rotations + the offset for the segment
-      let fullRotation = 1080; // 3 full rotations (3 * 360)
-      let totalRotation = fullRotation + rotationDegree;
+      // Store the current time as the last spin time
+      localStorage.setItem('lastSpinTime', Date.now());
 
-      // Apply the spin to the wheel
-      document.querySelector('.wheel').style.transition = "transform 1.5s linear"; // Fast and consistent spin
-      document.querySelector('.wheel').style.transform = `rotate(${totalRotation}deg)`;
-
-      // After the spinning animation, display the result
-      setTimeout(() => {
-        document.getElementById('wheel-number').innerText = randomNum;
-        document.getElementById('result').innerText = `You rolled: ${randomNum}`;
-
-        // Show winning message if the random number is 171
-        if (randomNum === 171) {
-          document.getElementById('winning-message').style.display = 'block';
-        } else {
-          document.getElementById('winning-message').style.display = 'none';
-        }
-
-        // Re-enable the button after the spin completes
-        document.querySelector('.btn').disabled = false;
-      }, 1500); // Delay for the spinning animation to finish
+      // Update the cooldown timer
+      setTimeout(updateCooldown, 1000);
     }
+
+    // Initialize the page with cooldown timer
+    updateCooldown();
   </script>
 </body>
 </html>
