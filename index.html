@@ -76,34 +76,18 @@
     <button class="btn" id="spin-btn" onclick="generateNumber()">Spin the Wheel!</button>
     <div id="result"></div>
     <div id="winning-message">Congratulations! You won!</div>
-    <div id="time-left" style="color: red; font-size: 20px; margin-top: 20px;"></div>
   </div>
 
   <script>
-    let lastSpinTime = localStorage.getItem('lastSpinTime'); // Get the time of the last spin from localStorage
-    let cooldown = 5 * 60 * 1000; // 5 minutes in milliseconds
+    // Check if the user has spun before
+    let hasSpunBefore = localStorage.getItem('hasSpunBefore');
 
-    function updateCooldown() {
-      const currentTime = Date.now();
-      const timeRemaining = lastSpinTime ? cooldown - (currentTime - lastSpinTime) : 0;
-      const minutesRemaining = Math.max(0, Math.floor(timeRemaining / 60000));
-      const secondsRemaining = Math.max(0, Math.floor((timeRemaining % 60000) / 1000));
-
-      document.getElementById('time-left').innerText = `Time left to spin: ${minutesRemaining}m ${secondsRemaining}s`;
-
-      if (timeRemaining <= 0) {
-        // If cooldown is over, enable the button
-        document.getElementById('spin-btn').disabled = false;
-      } else {
-        // Disable the button during cooldown
-        document.getElementById('spin-btn').disabled = true;
-      }
+    // Disable the button if the user has spun before
+    if (hasSpunBefore) {
+      document.getElementById('spin-btn').disabled = true;
     }
 
     function generateNumber() {
-      // Disable the button for 5 minutes after the spin
-      document.getElementById('spin-btn').disabled = true;
-
       // Generate a random number between 1 and 500
       let randomNum = Math.floor(Math.random() * 500) + 1;
 
@@ -118,15 +102,12 @@
         document.getElementById('winning-message').style.display = 'none';
       }
 
-      // Store the current time as the last spin time
-      localStorage.setItem('lastSpinTime', Date.now());
+      // Set that the user has spun before in localStorage
+      localStorage.setItem('hasSpunBefore', true);
 
-      // Update the cooldown timer
-      setTimeout(updateCooldown, 1000);
+      // Disable the button after the first spin
+      document.getElementById('spin-btn').disabled = true;
     }
-
-    // Initialize the page with cooldown timer
-    updateCooldown();
   </script>
 </body>
 </html>
