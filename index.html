@@ -6,7 +6,6 @@
   <title>RNG Wheel with Ice Cream Background</title>
   <style>
     body {
-      /* Use the provided direct image URL as the background */
       background: url('https://media.istockphoto.com/id/1405543709/photo/colorful-ice-cream-balls-on-table.jpg?s=612x612&w=0&k=20&c=GuZj0JUqpoSPa4Hjxiuw-A5xs4BNgTJIGOl7Fww6eqQ=') no-repeat center center fixed;
       background-size: cover;
       font-family: Arial, sans-serif;
@@ -34,7 +33,7 @@
       position: relative;
       background-color: #f3f3f3;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-      transition: transform 3s cubic-bezier(0.2, 1, 0.22, 1);
+      transition: transform 3s ease-out; /* More natural easing */
     }
     .wheel span {
       font-size: 24px;
@@ -85,9 +84,9 @@
       // Disable the button while the wheel is spinning
       document.querySelector('.btn').disabled = true;
       
-      // Generate a random rotation between 1800 and 2160 degrees for a cool spin effect
+      // Generate a random rotation between 1800 and 3600 degrees for a more natural effect
       let randomDeg = Math.floor(Math.random() * 360) + 1800;
-      document.querySelector('.wheel').style.transition = "transform 3s cubic-bezier(0.2, 1, 0.22, 1)";
+      document.querySelector('.wheel').style.transition = "transform 3s ease-out";
       document.querySelector('.wheel').style.transform = `rotate(${randomDeg}deg)`;
       
       // Wait for the spinning animation to complete
@@ -96,7 +95,7 @@
         
         // Maintain the final rotation state and update the wheel number
         document.querySelector('.wheel').style.transition = "none";
-        document.querySelector('.wheel').style.transform = `rotate(${randomDeg}deg)`;
+        document.querySelector('.wheel').style.transform = `rotate(${randomDeg % 360}deg)`;
         document.getElementById('wheel-number').innerText = randomNum;
         document.getElementById('result').innerText = `You rolled: ${randomNum}`;
         
