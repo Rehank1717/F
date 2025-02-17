@@ -33,7 +33,7 @@
       position: relative;
       background-color: #f3f3f3;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-      transition: transform 2s linear; /* Fast and consistent spin */
+      transition: transform 1.5s linear; /* Fast and consistent spin */
     }
     .wheel span {
       font-size: 24px;
@@ -87,16 +87,19 @@
       // Generate a random number between 1 and 500
       let randomNum = Math.floor(Math.random() * 500) + 1;
 
-      // Generate a random position between 0 and 7 for 8 possible equal segments (45-degree increments)
+      // Calculate the segment index (number 1 - 500)
       let segmentCount = 8;
       let randomSegment = Math.floor(Math.random() * segmentCount);
 
-      // Calculate the total degree for the rotation (multiple full spins + the segment's position)
-      let fullSpins = 5; // 5 full spins to make it exciting
-      let totalRotation = (360 * fullSpins) + (randomSegment * 45);
+      // The rotation needs to be a multiple of 45 degrees
+      let rotationDegree = 45 * randomSegment;
 
-      // Apply the spin to the wheel (rotate it with the calculated total degrees)
-      document.querySelector('.wheel').style.transition = "transform 2s linear"; // Consistent speed
+      // Make the wheel spin 3 full rotations + the offset for the segment
+      let fullRotation = 1080; // 3 full rotations (3 * 360)
+      let totalRotation = fullRotation + rotationDegree;
+
+      // Apply the spin to the wheel
+      document.querySelector('.wheel').style.transition = "transform 1.5s linear"; // Fast and consistent spin
       document.querySelector('.wheel').style.transform = `rotate(${totalRotation}deg)`;
 
       // After the spinning animation, display the result
@@ -113,7 +116,7 @@
 
         // Re-enable the button after the spin completes
         document.querySelector('.btn').disabled = false;
-      }, 2000); // Delay for the spinning animation to finish
+      }, 1500); // Delay for the spinning animation to finish
     }
   </script>
 </body>
