@@ -1,4 +1,4 @@
-            <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -33,7 +33,7 @@
       position: relative;
       background-color: #f3f3f3;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-      transition: transform 3s ease-out; /* More natural easing */
+      transition: transform 3s cubic-bezier(0.2, 1, 0.22, 1);
     }
     .wheel span {
       font-size: 24px;
@@ -84,31 +84,33 @@
       // Disable the button while the wheel is spinning
       document.querySelector('.btn').disabled = true;
       
-      // Generate a random rotation between 1800 and 3600 degrees for a more natural effect
-      let randomDeg = Math.floor(Math.random() * 360) + 1800;
+      // Generate a random number between 1 and 500
+      let randomNum = Math.floor(Math.random() * 500) + 1;
+
+      // Ensure the number aligns with one of the 8 possible landing positions (multiples of 45 degrees)
+      let segments = 8; // You can imagine this as a pie divided into 8 sections
+      let randomDeg = (Math.floor(Math.random() * 500) + 1) * 45; // Multiples of 45 degrees
+
+      // Spin the wheel at a consistent speed for 3 seconds
       document.querySelector('.wheel').style.transition = "transform 3s ease-out";
-      document.querySelector('.wheel').style.transform = `rotate(${randomDeg}deg)`;
-      
-      // Wait for the spinning animation to complete
+      document.querySelector('.wheel').style.transform = `rotate(${randomDeg + 1800}deg)`;  // Spin it multiple times to make it look exciting
+
+      // After the spinning is done, update the wheel with the new random number
       setTimeout(() => {
-        let randomNum = Math.floor(Math.random() * 500) + 1;
-        
-        // Maintain the final rotation state and update the wheel number
-        document.querySelector('.wheel').style.transition = "none";
-        document.querySelector('.wheel').style.transform = `rotate(${randomDeg % 360}deg)`;
+        // Update the number on the wheel
         document.getElementById('wheel-number').innerText = randomNum;
         document.getElementById('result').innerText = `You rolled: ${randomNum}`;
-        
-        // Show winning message if the random number is 171
+
+        // Show winning message if the number is 171
         if (randomNum === 171) {
           document.getElementById('winning-message').style.display = 'block';
         } else {
           document.getElementById('winning-message').style.display = 'none';
         }
-        
+
         // Re-enable the button after the spin completes
         document.querySelector('.btn').disabled = false;
-      }, 3000);
+      }, 3000);  // 3 seconds delay to allow spinning animation to finish
     }
   </script>
 </body>
