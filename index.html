@@ -26,22 +26,21 @@
       width: 200px;
       height: 200px;
       border-radius: 50%;
-      border: 10px solid #ffcc00;
+      border: 10px solid #003366; /* Dark blue color */
       display: flex;
       justify-content: center;
       align-items: center;
       position: relative;
-      background-color: #f3f3f3;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    }
-    .wheel span {
+      background-color: #003366; /* Dark blue color */
+      color: white;
       font-size: 24px;
-      color: #ffcc00;
       font-weight: bold;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      transition: transform 2s ease-out;
     }
     .btn {
-      background-color: #ffcc00;
-      color: black;
+      background-color: #ff0000; /* Red button */
+      color: white;
       padding: 15px 30px;
       font-size: 20px;
       border: none;
@@ -50,7 +49,7 @@
       border-radius: 8px;
     }
     .btn:hover {
-      background-color: #ffa500;
+      background-color: #ff4d4d;
     }
     #result {
       font-size: 24px;
@@ -88,6 +87,9 @@
     }
 
     function generateNumber() {
+      // Disable the button
+      document.getElementById('spin-btn').disabled = true;
+
       // Generate a random number between 1 and 500
       let randomNum = Math.floor(Math.random() * 500) + 1;
 
@@ -105,8 +107,8 @@
       // Set that the user has spun before in localStorage
       localStorage.setItem('hasSpunBefore', true);
 
-      // Disable the button after the first spin
-      document.getElementById('spin-btn').disabled = true;
+      // Animate the wheel spin
+      document.getElementById('wheel').style.transform = 'rotate(' + (Math.random() * 360 + 720) + 'deg)';
     }
   </script>
 </body>
