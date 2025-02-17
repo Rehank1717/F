@@ -34,12 +34,10 @@
             background-color: #f3f3f3;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         }
-        .wheel:before {
-            content: 'SPIN';
+        .wheel span {
             font-size: 24px;
             color: #ffcc00;
             font-weight: bold;
-            position: absolute;
         }
         .btn {
             background-color: #ffcc00;
@@ -73,7 +71,7 @@
 <body>
     <div class="container">
         <div class="wheel">
-            <div>1-1000</div>
+            <span id="wheel-number">1 - 1000</span>
         </div>
         <button class="btn" onclick="generateNumber()">Spin the Wheel!</button>
         <div id="result"></div>
@@ -96,6 +94,9 @@
                 // Stop spinning animation after the random number is generated
                 document.querySelector('.wheel').style.animation = "none";
                 document.getElementById('result').innerText = `You rolled: ${randomNum}`;
+
+                // Update the number inside the wheel
+                document.getElementById('wheel-number').innerText = randomNum;
 
                 // Show winning message if the random number is 171
                 if (randomNum === 171) {
