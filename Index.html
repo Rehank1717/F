@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RNG Wheel</title>
+    <style>
+        body {
+            background: url('https://example.com/mango_honey_background.jpg') repeat;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-size: 50px 50px;
+            text-align: center;
+            color: white;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .btn {
+            background-color: #ffcc00;
+            color: black;
+            padding: 15px 30px;
+            font-size: 20px;
+            border: none;
+            cursor: pointer;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+        .btn:hover {
+            background-color: #ffa500;
+        }
+        #result {
+            font-size: 24px;
+            font-weight: bold;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        #winning-message {
+            color: green;
+            font-size: 26px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="btn" onclick="generateNumber()">Spin the Wheel!</button>
+        <div id="result"></div>
+        <div id="winning-message" style="display:none;">Congratulations! You won!</div>
+    </div>
+
+    <script>
+        function generateNumber() {
+            // Generate a random number between 1 and 1000
+            let randomNum = Math.floor(Math.random() * 1000) + 1;
+
+            // Display the result
+            document.getElementById('result').innerText = `You rolled: ${randomNum}`;
+
+            // Check if the number is 171
+            if (randomNum === 171) {
+                document.getElementById('winning-message').style.display = 'block';
+            } else {
+                document.getElementById('winning-message').style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
