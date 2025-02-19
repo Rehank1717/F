@@ -6,8 +6,9 @@
   <title>RNG Wheel</title>
   <style>
     body {
-      background: url('https://api.deepai.org/job-view-file/f0bf274b-d14c-4b49-99a1-00b253404211/outputs/output.jpg') no-repeat center center fixed;
-      background-size: cover;
+      background: url('https://api.deepai.org/job-view-file/f0bf274b-d14c-4b49-99a1-00b253404211/outputs/output.jpg') no-repeat center center;
+      background-size: contain; /* Ensures the entire image fits inside the body */
+      background-attachment: fixed; /* Keeps the image fixed in place when scrolling */
       font-family: Arial, sans-serif;
       display: flex;
       justify-content: center;
