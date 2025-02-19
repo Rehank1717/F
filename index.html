@@ -95,12 +95,6 @@
   </div>
 
   <script>
-    let hasSpunBefore = localStorage.getItem('hasSpunBefore');
-
-    if (hasSpunBefore) {
-      document.getElementById('spin-btn').disabled = true;
-    }
-
     function generateNumber() {
       let spinButton = document.getElementById('spin-btn');
       let wheel = document.getElementById('wheel');
@@ -108,7 +102,7 @@
       let resultBox = document.getElementById('result');
       let messageBox = document.getElementById('winning-message');
 
-      // Disable the button
+      // Disable the button temporarily
       spinButton.disabled = true;
 
       // Generate a random number between 1 and 10,000
@@ -142,8 +136,8 @@
           messageBox.className = "lose";
         }
 
-        // Save that the user has spun before
-        localStorage.setItem('hasSpunBefore', true);
+        // Enable the button after the spin
+        spinButton.disabled = false;
       }, 2000);
     }
   </script>
