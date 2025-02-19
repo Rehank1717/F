@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RNG Wheel</title>
   <style>
     body {
-      background: url('https://api.deepai.org/job-view-file/6ec30a27-ecb2-4457-8651-3684cfc9fdb3/outputs/output.jpg) no-repeat center center fixed;
+      background: url('https://api.deepai.org/job-view-file/6ec30a27-ecb2-4457-8651-3684cfc9fdb3/outputs/output.jpg') no-repeat center center fixed;
       background-size: cover;
       font-family: Arial, sans-serif;
       display: flex;
@@ -62,6 +62,10 @@
     .btn:hover {
       background-color: #ff4d4d;
     }
+    .btn:disabled {
+      background-color: gray;
+      cursor: not-allowed;
+    }
     #result {
       font-size: 24px;
       font-weight: bold;
@@ -74,18 +78,16 @@
       font-weight: bold;
       margin-top: 20px;
     }
-    .win {
-      color: green;
-    }
-    .lose {
-      color: red;
-    }
+    .big-win { color: gold; }
+    .second-prize { color: cyan; }
+    .small-prize { color: green; }
+    .lose { color: red; }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="wheel" id="wheel">
-      <span id="wheel-number">1 - 500</span>
+      <span id="wheel-number">1 - 10,000</span>
     </div>
     <button class="btn" id="spin-btn" onclick="generateNumber()">Spin the Wheel!</button>
     <div id="result"></div>
@@ -94,27 +96,55 @@
 
   <script>
     let hasSpunBefore = localStorage.getItem('hasSpunBefore');
+
     if (hasSpunBefore) {
       document.getElementById('spin-btn').disabled = true;
     }
 
     function generateNumber() {
-      document.getElementById('spin-btn').disabled = true;
-      let randomNum = Math.floor(Math.random() * 500) + 1;
-      document.getElementById('wheel-number').innerText = randomNum;
-      document.getElementById('result').innerText = `You rolled: ${randomNum}`;
-
+      let spinButton = document.getElementById('spin-btn');
+      let wheel = document.getElementById('wheel');
+      let wheelNumber = document.getElementById('wheel-number');
+      let resultBox = document.getElementById('result');
       let messageBox = document.getElementById('winning-message');
-      if (randomNum === 171) {
-        messageBox.innerText = "Congratulations! You won!";
-        messageBox.className = "win";
-      } else {
-        messageBox.innerText = "Better luck next time!";
-        messageBox.className = "lose";
-      }
 
-      localStorage.setItem('hasSpunBefore', true);
-      document.getElementById('wheel').style.transform = 'rotate(' + (Math.random() * 360 + 720) + 'deg)';
+      // Disable the button
+      spinButton.disabled = true;
+
+      // Generate a random number between 1 and 10,000
+      let randomNum = Math.floor(Math.random() * 10000) + 1;
+
+      // Rotate the wheel smoothly
+      let randomRotation = Math.floor(Math.random() * 360) + 1440; // Ensures multiple full spins
+      wheel.style.transform = `rotate(${randomRotation}deg)`;
+
+      // Winning numbers and messages
+      const bigWin = [171];
+      const secondPrize = [1, 3400, 2650, 10000];
+      const smallPrize = [2, 3673, 6476, 7602, 47];
+
+      // Delay revealing the number until after the spin animation
+      setTimeout(() => {
+        wheelNumber.innerText = randomNum;
+        resultBox.innerText = `You rolled: ${randomNum}`;
+
+        if (bigWin.includes(randomNum)) {
+          messageBox.innerText = "BIG WINNER 🏆";
+          messageBox.className = "big-win";
+        } else if (secondPrize.includes(randomNum)) {
+          messageBox.innerText = "SECOND PRIZE";
+          messageBox.className = "second-prize";
+        } else if (smallPrize.includes(randomNum)) {
+          messageBox.innerText = "Congrats on the prize 😄";
+          messageBox.className = "small-prize";
+        } else {
+          messageBox.innerText = "Better luck next time!";
+          messageBox.className = "lose";
+        }
+
+        // Save that the user has spun before
+        localStorage.setItem('hasSpunBefore', true);
+      }, 2000);
     }
   </script>
 </body>
