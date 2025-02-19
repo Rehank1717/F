@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RNG Wheel with Ice Cream Background</title>
+  <title>RNG Wheel</title>
   <style>
     body {
-      background: url('https://media.istockphoto.com/id/1405543709/photo/colorful-ice-cream-balls-on-table.jpg?s=612x612&w=0&k=20&c=GuZj0JUqpoSPa4Hjxiuw-A5xs4BNgTJIGOl7Fww6eqQ=') no-repeat center center fixed;
+      background: url('https://api.deepai.org/job-view-file/6ec30a27-ecb2-4457-8651-3684cfc9fdb3/outputs/output.jpg') no-repeat center center fixed;
       background-size: cover;
       font-family: Arial, sans-serif;
       display: flex;
@@ -26,12 +26,12 @@
       width: 200px;
       height: 200px;
       border-radius: 50%;
-      border: 10px solid black; /* Black outline */
+      border: 10px solid black;
       display: flex;
       justify-content: center;
       align-items: center;
       position: relative;
-      background-color: #003366; /* Dark blue color */
+      background-color: #003366;
       color: white;
       font-size: 24px;
       font-weight: bold;
@@ -46,11 +46,11 @@
       right: -10px;
       bottom: -10px;
       border-radius: 50%;
-      border: 10px solid gold; /* Gold outline */
+      border: 10px solid gold;
       z-index: -1;
     }
     .btn {
-      background-color: #ff0000; /* Red button */
+      background-color: #ff0000;
       color: white;
       padding: 15px 30px;
       font-size: 20px;
@@ -93,28 +93,18 @@
   </div>
 
   <script>
-    // Check if the user has spun before
     let hasSpunBefore = localStorage.getItem('hasSpunBefore');
-
-    // Disable the button if the user has spun before
     if (hasSpunBefore) {
       document.getElementById('spin-btn').disabled = true;
     }
 
     function generateNumber() {
-      // Disable the button
       document.getElementById('spin-btn').disabled = true;
-
-      // Generate a random number between 1 and 500
       let randomNum = Math.floor(Math.random() * 500) + 1;
-
-      // Display the result
       document.getElementById('wheel-number').innerText = randomNum;
       document.getElementById('result').innerText = `You rolled: ${randomNum}`;
 
       let messageBox = document.getElementById('winning-message');
-
-      // Show winning or losing message
       if (randomNum === 171) {
         messageBox.innerText = "Congratulations! You won!";
         messageBox.className = "win";
@@ -123,10 +113,7 @@
         messageBox.className = "lose";
       }
 
-      // Set that the user has spun before in localStorage
       localStorage.setItem('hasSpunBefore', true);
-
-      // Animate the wheel spin
       document.getElementById('wheel').style.transform = 'rotate(' + (Math.random() * 360 + 720) + 'deg)';
     }
   </script>
