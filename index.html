@@ -14,6 +14,7 @@
       align-items: center;
       height: 100vh;
       margin: 0;
+      justify-content: space-between;
       text-align: center;
     }
     .prize-box {
@@ -71,18 +72,22 @@
     <p>Small Prize: Free scoops or discounts!</p>
   </div>
 
-  <div class="lotto-container" id="lotto-container">
+  <!-- Center the wheel container -->
+  <div class="lotto-container" id="lotto-container" style="flex-grow: 1; display: flex; align-items: center; justify-content: center;">
     <div class="column" id="col1">0</div>
     <div class="column" id="col2">0</div>
     <div class="column" id="col3">0</div>
     <div class="column" id="col4">0</div>
     <div class="column" id="col5">0</div>
   </div>
+
   <button class="btn" id="spin-btn" onclick="generateNumber()">Spin the Lotto!</button>
+
+  <!-- Move description to the bottom -->
+  <p class="description">Press the button to spin the lotto! Each column will land on a random number, forming a five-digit combination. Match the winning numbers for a chance to win BIG PRIZES!</p>
+
   <div id="result"></div>
   <div id="winning-message"></div>
-
-  <p class="description">Press the button to spin the lotto! Each column will land on a random number, forming a five-digit combination. Match the winning numbers for a chance to win BIG PRIZES!</p>
 
   <script>
     // Ensure the DOM is loaded before running the script
