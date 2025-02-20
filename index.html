@@ -2,7 +2,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RNG Lotto Wheel</title>
+  <title>RNG Lotto</title>
   <style>
     body {
       background: url('https://api.deepai.org/job-view-file/994ab6c9-0205-4dc8-93cb-d8ee3772c520/outputs/output.jpg') no-repeat center center fixed;
@@ -22,24 +22,22 @@
       flex-direction: column;
       align-items: center;
     }
-    .lotto-box {
+    .lotto-container {
       display: flex;
-      justify-content: center;
       gap: 10px;
-      margin: 20px;
+      margin-bottom: 20px;
     }
     .column {
-      width: 50px;
+      width: 60px;
       height: 80px;
       background-color: #003366;
-      border-radius: 10px;
-      border: 3px solid gold;
+      color: white;
+      font-size: 36px;
+      font-weight: bold;
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 24px;
-      font-weight: bold;
-      color: white;
+      border-radius: 10px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     }
     .btn {
@@ -75,46 +73,50 @@
 </head>
 <body>
   <div class="container">
-    <div class="lotto-box" id="lotto-box">
-      <div class="column" id="col1">?</div>
-      <div class="column" id="col2">?</div>
-      <div class="column" id="col3">?</div>
-      <div class="column" id="col4">?</div>
-      <div class="column" id="col5">?</div>
+    <div class="lotto-container" id="lotto-container">
+      <div class="column" id="col1">0</div>
+      <div class="column" id="col2">0</div>
+      <div class="column" id="col3">0</div>
+      <div class="column" id="col4">0</div>
+      <div class="column" id="col5">0</div>
     </div>
-    <button class="btn" id="spin-btn" onclick="generateLottoNumbers()">Spin the Wheel!</button>
+    <button class="btn" id="spin-btn" onclick="generateNumber()">Spin the Lotto!</button>
     <div id="result"></div>
     <div id="winning-message"></div>
   </div>  <script>
-    function generateLottoNumbers() {
+    function generateNumber() {
       let spinButton = document.getElementById('spin-btn');
       let resultBox = document.getElementById('result');
       let messageBox = document.getElementById('winning-message');
+      let columns = [
+        document.getElementById('col1'),
+        document.getElementById('col2'),
+        document.getElementById('col3'),
+        document.getElementById('col4'),
+        document.getElementById('col5')
+      ];
       
-      // Generate 5 random numbers (each between 1 and 10)
-      let numbers = Array.from({ length: 5 }, () => Math.floor(Math.random() * 10) + 1);
+      let number = '';
+      columns.forEach(col => {
+        let randomDigit = Math.floor(Math.random() * 10);
+        col.innerText = randomDigit;
+        number += randomDigit;
+      });
       
-      document.getElementById('col1').innerText = numbers[0];
-      document.getElementById('col2').innerText = numbers[1];
-      document.getElementById('col3').innerText = numbers[2];
-      document.getElementById('col4').innerText = numbers[3];
-      document.getElementById('col5').innerText = numbers[4];
+      let randomNum = parseInt(number, 10);
+      resultBox.innerText = `You rolled: ${randomNum}`;
       
-      let generatedNumber = parseInt(numbers.join(''));
-      resultBox.innerText = `You rolled: ${generatedNumber}`;
-      
-      // Winning numbers and messages
       const bigWin = [171];
       const secondPrize = [1, 3400, 2650, 10000];
       const smallPrize = [2, 3673, 6476, 7602, 47];
-      
-      if (bigWin.includes(generatedNumber)) {
+
+      if (bigWin.includes(randomNum)) {
         messageBox.innerText = "BIG WINNER 🏆";
         messageBox.className = "big-win";
-      } else if (secondPrize.includes(generatedNumber)) {
+      } else if (secondPrize.includes(randomNum)) {
         messageBox.innerText = "SECOND PRIZE";
         messageBox.className = "second-prize";
-      } else if (smallPrize.includes(generatedNumber)) {
+      } else if (smallPrize.includes(randomNum)) {
         messageBox.innerText = "Congrats on the prize 😄";
         messageBox.className = "small-prize";
       } else {
