@@ -15,8 +15,6 @@
       height: 100vh;
       margin: 0;
       text-align: center;
-      justify-content: space-between;
-      background-color: #000; /* Fallback color */
     }
     .prize-box {
       position: absolute;
@@ -24,26 +22,12 @@
       left: 10px;
       background-color: black;
       color: white;
-      padding: 15px;
+      padding: 10px;
       border-radius: 5px;
       font-size: 14px;
-      max-width: 300px;
     }
-    .lotto-container {
-      display: flex;
-      justify-content: center;
-      margin-top: 50px;
-    }
-    .column {
-      width: 50px;
-      height: 100px;
-      border: 2px solid black;
-      margin: 0 5px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 36px;
-      background-color: white;
+    .wheel-container {
+      margin-top: 100px; /* Move the wheel down */
     }
     .btn {
       background-color: #ff0000;
@@ -59,45 +43,28 @@
       background-color: #ff4d4d;
     }
     .description {
-      font-size: 12px;
+      font-size: 14px;
       color: black;
       margin-top: 20px;
       text-align: center;
-      margin-bottom: 20px;
-    }
-    .main-container {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      flex-grow: 1;
     }
   </style>
 </head>
 <body>
   <div class="prize-box">
     <p><strong>Winning Numbers:</strong></p>
-    <p><strong>Big Prize:</strong> Tropical vacation (0171)</p>
-    <p><strong>Medium Prize:</strong> Free ice cream for a month or merch (3465, 0231, 5678, 9876)</p>
-    <p><strong>Small Prize:</strong> Free scoops or discounts (1234, 6531, 1098, 5468, 7638)</p>
+    <p>Big Prize: Tropical Vacation - 0171</p>
+    <p>Medium Prizes: Free Ice Cream for a Month or Custom Merch - 3465, 0231, 5678, 9876</p>
+    <p>Small Prizes: Free Scoops or Discounts - 1234, 6531, 1098, 5468, 7638</p>
   </div>
 
-  <div class="main-container">
-    <div class="lotto-container" id="lotto-container">
-      <!-- 4 columns instead of 5 -->
-      <div class="column" id="col1">0</div>
-      <div class="column" id="col2">0</div>
-      <div class="column" id="col3">0</div>
-      <div class="column" id="col4">0</div>
-    </div>
-
-    <button class="btn" id="spin-btn" onclick="generateNumber()">Spin the Lotto!</button>
+  <div class="wheel-container">
+    <button class="btn" id="spin-btn" onclick="generateNumber()">Spin the Wheel!</button>
+    <div id="result"></div>
+    <div id="winning-message"></div>
   </div>
 
-  <p class="description">Press the button to spin the lotto! Each column will land on a random number, forming a four-digit combination. Match the winning numbers for a chance to win BIG PRIZES!</p>
-
-  <div id="result"></div>
-  <div id="winning-message"></div>
+  <p class="description">Press the button to spin the wheel! Get a random number and match it with the winning numbers to win amazing prizes!</p>
 
   <script>
     function generateNumber() {
@@ -105,30 +72,23 @@
       let resultBox = document.getElementById('result');
       let messageBox = document.getElementById('winning-message');
 
-      // Generate a four-digit number
-      let randomNum = '';
-      for (let i = 1; i <= 4; i++) {
-        let digit = Math.floor(Math.random() * 10);
-        document.getElementById(`col${i}`).innerText = digit;
-        randomNum += digit;
-      }
-
-      randomNum = parseInt(randomNum, 10); // Ensure it's a number
+      // Generate a random number between 1 and 10000
+      let randomNum = Math.floor(Math.random() * 10000);
 
       resultBox.innerText = `You rolled: ${randomNum}`;
       
-      const bigWin = [171]; // Big Prize
-      const secondPrize = [3465, 231, 5678, 9876]; // Medium Prize
-      const smallPrize = [1234, 6531, 1098, 5468, 7638]; // Small Prize
+      const bigWin = [171];
+      const mediumPrizes = [3465, 231, 5678, 9876];
+      const smallPrizes = [1234, 6531, 1098, 5468, 7638];
 
       if (bigWin.includes(randomNum)) {
-        messageBox.innerText = "BIG WINNER 🏆 Tropical vacation!";
+        messageBox.innerText = "BIG WINNER 🏆 Tropical Vacation!";
         messageBox.style.color = "gold";
-      } else if (secondPrize.includes(randomNum)) {
-        messageBox.innerText = "SECOND PRIZE Free ice cream for a month or merch!";
+      } else if (mediumPrizes.includes(randomNum)) {
+        messageBox.innerText = "SECOND PRIZE! Free Ice Cream or Custom Merch";
         messageBox.style.color = "cyan";
-      } else if (smallPrize.includes(randomNum)) {
-        messageBox.innerText = "Congrats on the prize Free scoops or discounts!";
+      } else if (smallPrizes.includes(randomNum)) {
+        messageBox.innerText = "Congrats on the prize! Free Scoops or Discounts";
         messageBox.style.color = "green";
       } else {
         messageBox.innerText = "Better luck next time!";
