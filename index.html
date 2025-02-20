@@ -1,12 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RNG Wheel</title>
   <style>
     body {
-      background: url('https://api.deepai.org/job-view-file/961beba4-f3de-4425-a308-9627f9e5ba9f/outputs/output.jpg') no-repeat center center fixed;
+      background: url('https://api.deepai.org/job-view-file/994ab6c9-0205-4dc8-93cb-d8ee3772c520/outputs/output.jpg') no-repeat center center fixed;
       background-size: cover;
       font-family: Arial, sans-serif;
       display: flex;
@@ -37,7 +36,7 @@
       font-size: 24px;
       font-weight: bold;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-      transition: transform 0.5s ease-out;
+      transition: transform 0.5s linear;
     }
     .wheel:after {
       content: '';
@@ -79,14 +78,15 @@
     .second-prize { color: cyan; }
     .small-prize { color: green; }
     .lose { color: red; }
-    .prize-box {
+    .info-box {
       position: absolute;
       top: 10px;
       left: 10px;
       background: rgba(0, 0, 0, 0.7);
-      padding: 10px;
-      border-radius: 5px;
+      padding: 15px;
+      border-radius: 10px;
       font-size: 14px;
+      text-align: left;
     }
     .description {
       font-size: 12px;
@@ -95,11 +95,11 @@
   </style>
 </head>
 <body>
-  <div class="prize-box">
-    <p><strong>Winning Numbers:</strong></p>
-    <p><strong>Large Prize:</strong> A tropical vacation!</p>
-    <p><strong>Medium Prize:</strong> Free ice cream for a month or custom merch!</p>
-    <p><strong>Small Prize:</strong> Free scoops or discounts!</p>
+  <div class="info-box">
+    <strong>Winning Numbers:</strong><br>
+    <strong>Large:</strong> 171 - A tropical vacation!<br>
+    <strong>Medium:</strong> 1, 3400, 2650, 10000 - Free ice cream or merchandise!<br>
+    <strong>Small:</strong> 2, 3673, 6476, 7602, 47 - Free scoops or discounts!
   </div>
   <div class="container">
     <div class="wheel" id="wheel">
@@ -109,48 +109,47 @@
     <div id="result"></div>
     <div id="winning-message"></div>
   </div>
-  <p class="description">Spin the wheel for a chance to win a <strong>BIG PRIZE</strong>! Will you be the lucky winner?</p>
+  <p class="description">Spin the wheel for a chance to win amazing prizes! There’s a chance to win a BIG PRIZE!</p>
   <script>
     function generateNumber() {
       let spinButton = document.getElementById('spin-btn');
       let wheel = document.getElementById('wheel');
       let wheelNumber = document.getElementById('wheel-number');
       let resultBox = document.getElementById('result');
-      let messageBox = document.getElementById('winning-message');
-      
-      // Generate a random number between 1 and 10,000
-      let randomNum = Math.floor(Math.random() * 10000) + 1;
-      
-      // Rotate the wheel quickly
-      let randomRotation = Math.floor(Math.random() * 360) + 2880; // More spins
-      wheel.style.transition = "transform 0.5s ease-out";
-      wheel.style.transform = `rotate(${randomRotation}deg)`;
-      
-      // Winning numbers and messages
-      const bigWin = [171];
-      const secondPrize = [1, 3400, 2650, 10000];
-      const smallPrize = [2, 3673, 6476, 7602, 47];
-      
-      // Delay revealing the number until after the spin animation
-      setTimeout(() => {
-        wheelNumber.innerText = randomNum;
-        resultBox.innerText = `You rolled: ${randomNum}`;
-        
-        if (bigWin.includes(randomNum)) {
-          messageBox.innerText = "BIG WINNER 🏆";
-          messageBox.className = "big-win";
-        } else if (secondPrize.includes(randomNum)) {
-          messageBox.innerText = "SECOND PRIZE";
-          messageBox.className = "second-prize";
-        } else if (smallPrize.includes(randomNum)) {
-          messageBox.innerText = "Congrats on the prize 😄";
-          messageBox.className = "small-prize";
-        } else {
-          messageBox.innerText = "Better luck next time!";
-          messageBox.className = "lose";
-        }
-      }, 500);
+      let messageBox = document.getElementById('winning-message');// Generate a random number between 1 and 10,000
+  let randomNum = Math.floor(Math.random() * 10000) + 1;
+
+  // Rotate the wheel at high speed
+  let randomRotation = Math.floor(Math.random() * 360) + 1440; // Ensures multiple full spins
+  wheel.style.transition = "transform 0.2s linear";
+  wheel.style.transform = `rotate(${randomRotation}deg)`;
+
+  // Winning numbers and messages
+  const bigWin = [171];
+  const secondPrize = [1, 3400, 2650, 10000];
+  const smallPrize = [2, 3673, 6476, 7602, 47];
+
+  // Delay revealing the number until after the spin animation
+  setTimeout(() => {
+    wheelNumber.innerText = randomNum;
+    resultBox.innerText = `You rolled: ${randomNum}`;
+
+    if (bigWin.includes(randomNum)) {
+      messageBox.innerText = "BIG WINNER 🏆";
+      messageBox.className = "big-win";
+    } else if (secondPrize.includes(randomNum)) {
+      messageBox.innerText = "SECOND PRIZE";
+      messageBox.className = "second-prize";
+    } else if (smallPrize.includes(randomNum)) {
+      messageBox.innerText = "Congrats on the prize 😄";
+      messageBox.className = "small-prize";
+    } else {
+      messageBox.innerText = "Better luck next time!";
+      messageBox.className = "lose";
     }
+  }, 200);
+}
+
   </script>
 </body>
 </html>
