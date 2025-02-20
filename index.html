@@ -82,6 +82,7 @@
 
   <div class="main-container">
     <div class="lotto-container" id="lotto-container">
+      <!-- 4 columns instead of 5 -->
       <div class="column" id="col1">0</div>
       <div class="column" id="col2">0</div>
       <div class="column" id="col3">0</div>
@@ -97,47 +98,41 @@
   <div id="winning-message"></div>
 
   <script>
-    // Ensure the DOM is loaded before running the script
-    document.addEventListener('DOMContentLoaded', function () {
-      function generateNumber() {
-        let spinButton = document.getElementById('spin-btn');
-        let resultBox = document.getElementById('result');
-        let messageBox = document.getElementById('winning-message');
+    function generateNumber() {
+      let spinButton = document.getElementById('spin-btn');
+      let resultBox = document.getElementById('result');
+      let messageBox = document.getElementById('winning-message');
 
-        // Generate a four-digit number
-        let randomNum = '';
-        for (let i = 1; i <= 4; i++) {
-          let digit = Math.floor(Math.random() * 10);
-          document.getElementById(`col${i}`).innerText = digit;
-          randomNum += digit;
-        }
-
-        randomNum = parseInt(randomNum, 10); // Ensure it's a number
-
-        resultBox.innerText = `You rolled: ${randomNum}`;
-        
-        const bigWin = [171]; // Big Prize
-        const secondPrize = [3465, 231, 5678, 9876]; // Medium Prize
-        const smallPrize = [1234, 6531, 1098, 5468, 7638]; // Small Prize
-
-        if (bigWin.includes(randomNum)) {
-          messageBox.innerText = "BIG WINNER 🏆";
-          messageBox.style.color = "gold";
-        } else if (secondPrize.includes(randomNum)) {
-          messageBox.innerText = "SECOND PRIZE";
-          messageBox.style.color = "cyan";
-        } else if (smallPrize.includes(randomNum)) {
-          messageBox.innerText = "Congrats on the prize 😄";
-          messageBox.style.color = "green";
-        } else {
-          messageBox.innerText = "Better luck next time!";
-          messageBox.style.color = "red";
-        }
+      // Generate a four-digit number
+      let randomNum = '';
+      for (let i = 1; i <= 4; i++) {
+        let digit = Math.floor(Math.random() * 10);
+        document.getElementById(`col${i}`).innerText = digit;
+        randomNum += digit;
       }
 
-      // Attach event listener to spin button
-      document.getElementById('spin-btn').addEventListener('click', generateNumber);
-    });
+      randomNum = parseInt(randomNum, 10); // Ensure it's a number
+
+      resultBox.innerText = `You rolled: ${randomNum}`;
+      
+      const bigWin = [171]; // Big Prize
+      const secondPrize = [3465, 231, 5678, 9876]; // Medium Prize
+      const smallPrize = [1234, 6531, 1098, 5468, 7638]; // Small Prize
+
+      if (bigWin.includes(randomNum)) {
+        messageBox.innerText = "BIG WINNER 🏆";
+        messageBox.style.color = "gold";
+      } else if (secondPrize.includes(randomNum)) {
+        messageBox.innerText = "SECOND PRIZE";
+        messageBox.style.color = "cyan";
+      } else if (smallPrize.includes(randomNum)) {
+        messageBox.innerText = "Congrats on the prize 😄";
+        messageBox.style.color = "green";
+      } else {
+        messageBox.innerText = "Better luck next time!";
+        messageBox.style.color = "red";
+      }
+    }
   </script>
 </body>
 </html>
