@@ -32,14 +32,14 @@
       margin-top: 50px;
     }
     .column {
-      width: 80px; /* Increased width for better visibility */
-      height: 150px; /* Increased height for better visibility */
+      width: 50px;
+      height: 100px;
       border: 2px solid black;
       margin: 0 5px;
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 48px; /* Larger font size */
+      font-size: 36px;
       background-color: white;
     }
     .btn {
@@ -70,6 +70,7 @@
     <p>Medium Prize: Free ice cream for a month or custom merch!</p>
     <p>Small Prize: Free scoops or discounts!</p>
   </div>
+
   <div class="lotto-container" id="lotto-container">
     <div class="column" id="col1">0</div>
     <div class="column" id="col2">0</div>
@@ -80,7 +81,9 @@
   <button class="btn" id="spin-btn" onclick="generateNumber()">Spin the Lotto!</button>
   <div id="result"></div>
   <div id="winning-message"></div>
+
   <p class="description">Press the button to spin the lotto! Each column will land on a random number, forming a five-digit combination. Match the winning numbers for a chance to win BIG PRIZES!</p>
+
   <script>
     function generateNumber() {
       let spinButton = document.getElementById('spin-btn');
