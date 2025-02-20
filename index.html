@@ -26,6 +26,7 @@
       padding: 10px;
       border-radius: 5px;
       font-size: 14px;
+      max-width: 300px;
     }
     .lotto-container {
       display: flex;
@@ -75,9 +76,9 @@
 <body>
   <div class="prize-box">
     <p><strong>Winning Numbers:</strong></p>
-    <p>Big Prize: 0171</p>
-    <p>Medium Prize: 3465, 0231, 5678, 9876</p>
-    <p>Small Prize: 1234, 6531, 1098, 5468, 7638</p>
+    <p><strong>Big Prize:</strong> Tropical vacation!</p>
+    <p><strong>Medium Prize:</strong> Free ice cream for a month or custom merch!</p>
+    <p><strong>Small Prize:</strong> Free scoops or discounts!</p>
   </div>
 
   <div class="main-container">
@@ -120,13 +121,13 @@
       const smallPrize = [1234, 6531, 1098, 5468, 7638]; // Small Prize
 
       if (bigWin.includes(randomNum)) {
-        messageBox.innerText = "BIG WINNER 🏆";
+        messageBox.innerText = "BIG WINNER 🏆 Tropical vacation!";
         messageBox.style.color = "gold";
       } else if (secondPrize.includes(randomNum)) {
-        messageBox.innerText = "SECOND PRIZE";
+        messageBox.innerText = "SECOND PRIZE Free ice cream for a month or merch!";
         messageBox.style.color = "cyan";
       } else if (smallPrize.includes(randomNum)) {
-        messageBox.innerText = "Congrats on the prize 😄";
+        messageBox.innerText = "Congrats on the prize Free scoops or discounts!";
         messageBox.style.color = "green";
       } else {
         messageBox.innerText = "Better luck next time!";
