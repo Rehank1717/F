@@ -17,19 +17,18 @@
       text-align: center;
     }
     .prize-box {
-      position: absolute;
-      top: 20px;
-      left: 20px;
       background-color: black;
       color: white;
-      padding: 10px;
+      padding: 20px;
       border-radius: 5px;
-      font-size: 14px;
+      font-size: 16px;
+      position: absolute;
+      top: 20px;
     }
     .lotto-container {
       display: flex;
       justify-content: center;
-      margin-top: 150px;
+      margin-top: 150px; /* Adjusted to move further down */
     }
     .column {
       width: 60px;
@@ -81,6 +80,7 @@
     <div class="column" id="col3">0</div>
     <div class="column" id="col4">0</div>
   </div>
+
   <button class="btn" id="spin-btn" onclick="generateNumber()">Spin the Lotto!</button>
   <div id="result"></div>
   <div id="winning-message"></div>
