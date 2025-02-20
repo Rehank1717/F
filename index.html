@@ -9,13 +9,15 @@
       background: url('https://api.deepai.org/job-view-file/f32cf0e9-7223-4b03-978f-3a5ecc8cfca2/outputs/output.jpg') no-repeat center center fixed;
       background-size: cover;
       font-family: Arial, sans-serif;
+      height: 100vh;
+      margin: 0;
       display: flex;
       flex-direction: column;
       align-items: center;
-      height: 100vh;
-      margin: 0;
+      justify-content: center; /* Fix for vertical centering */
       text-align: center;
     }
+
     .prize-box {
       background-color: black;
       color: white;
@@ -25,11 +27,14 @@
       position: absolute;
       top: 20px;
     }
+
     .lotto-container {
       display: flex;
       justify-content: center;
-      margin-top: 150px; /* Adjusted to move further down */
+      align-items: center; /* Ensure proper alignment */
+      margin-bottom: 30px;
     }
+
     .column {
       width: 60px;
       height: 100px;
@@ -41,6 +46,7 @@
       font-size: 36px;
       background-color: white;
     }
+
     .btn {
       background-color: #ff0000;
       color: white;
@@ -51,15 +57,18 @@
       margin-top: 30px;
       border-radius: 8px;
     }
+
     .btn:hover {
       background-color: #ff4d4d;
     }
+
     .description {
       font-size: 14px;
       color: black;
       margin-top: 20px;
       text-align: center;
     }
+
     #result {
       font-size: 24px;
       margin-top: 10px;
