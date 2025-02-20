@@ -44,7 +44,7 @@
       font-size: 24px;
       font-weight: bold;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-      transition: transform 2s ease-out;
+      transition: transform 0.5s ease-out;
     }
     .wheel:after {
       content: '';
@@ -115,8 +115,9 @@
   // Generate a random number between 1 and 10,000
   let randomNum = Math.floor(Math.random() * 10000) + 1;
 
-  // Rotate the wheel smoothly
-  let randomRotation = Math.floor(Math.random() * 360) + 1440;
+  // Rotate the wheel at a faster speed
+  let randomRotation = Math.floor(Math.random() * 360) + 2880; // More rotations for faster effect
+  wheel.style.transition = "transform 0.5s ease-out";
   wheel.style.transform = `rotate(${randomRotation}deg)`;
 
   // Winning numbers and messages
@@ -145,7 +146,7 @@
 
     // Re-enable the button after spin
     spinButton.disabled = false;
-  }, 2000);
+  }, 500);
 }
 
   </script>
