@@ -29,6 +29,41 @@
     .wheel-container {
       margin-top: 120px; /* Move the wheel container further down */
     }
+    .wheel {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      border: 5px solid black;
+      position: relative;
+      margin-bottom: 20px;
+      overflow: hidden;
+      background-color: #f4f4f4;
+    }
+    .wheel-inner {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transform-origin: center;
+      transition: transform 3s ease-out;
+    }
+    .wheel-section {
+      width: 50%;
+      height: 50%;
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform-origin: 0% 100%;
+      text-align: center;
+      padding-top: 20px;
+    }
+    .wheel-section span {
+      display: block;
+      font-size: 18px;
+      color: black;
+    }
     .btn {
       background-color: #ff0000;
       color: white;
@@ -48,6 +83,10 @@
       margin-top: 20px;
       text-align: center;
     }
+    #result {
+      font-size: 24px;
+      margin-top: 10px;
+    }
   </style>
 </head>
 <body>
@@ -59,7 +98,15 @@
   </div>
 
   <div class="wheel-container">
-    <button class="btn" id="spin-btn" onclick="generateNumber()">Spin the Wheel!</button>
+    <div class="wheel" id="wheel">
+      <div class="wheel-inner" id="wheel-inner">
+        <div class="wheel-section" style="transform: rotate(0deg);"><span>0171</span></div>
+        <div class="wheel-section" style="transform: rotate(90deg);"><span>3465</span></div>
+        <div class="wheel-section" style="transform: rotate(180deg);"><span>0231</span></div>
+        <div class="wheel-section" style="transform: rotate(270deg);"><span>5678</span></div>
+      </div>
+    </div>
+    <button class="btn" id="spin-btn" onclick="spinWheel()">Spin the Wheel!</button>
     <div id="result"></div>
     <div id="winning-message"></div>
   </div>
@@ -67,33 +114,46 @@
   <p class="description">Press the button to spin the wheel! Get a random number and match it with the winning numbers to win amazing prizes!</p>
 
   <script>
-    function generateNumber() {
-      let spinButton = document.getElementById('spin-btn');
+    function spinWheel() {
+      let wheel = document.getElementById('wheel-inner');
       let resultBox = document.getElementById('result');
       let messageBox = document.getElementById('winning-message');
 
-      // Generate a random number between 1 and 10000
-      let randomNum = Math.floor(Math.random() * 10000);
+      // Generate a random angle between 0 and 360 to rotate the wheel
+      let randomDeg = Math.floor(Math.random() * 360) + 3600; // 3600 to ensure it spins at least 10 times
 
-      resultBox.innerText = `You rolled: ${randomNum}`;
-      
-      const bigWin = [171];
-      const mediumPrizes = [3465, 231, 5678, 9876];
-      const smallPrizes = [1234, 6531, 1098, 5468, 7638];
+      // Rotate the wheel
+      wheel.style.transform = `rotate(${randomDeg}deg)`;
 
-      if (bigWin.includes(randomNum)) {
-        messageBox.innerText = "BIG WINNER 🏆 Tropical Vacation!";
-        messageBox.style.color = "gold";
-      } else if (mediumPrizes.includes(randomNum)) {
-        messageBox.innerText = "SECOND PRIZE! Free Ice Cream or Custom Merch";
-        messageBox.style.color = "cyan";
-      } else if (smallPrizes.includes(randomNum)) {
-        messageBox.innerText = "Congrats on the prize! Free Scoops or Discounts";
-        messageBox.style.color = "green";
-      } else {
-        messageBox.innerText = "Better luck next time!";
-        messageBox.style.color = "red";
-      }
+      // After spinning, get the result based on the degrees
+      setTimeout(function() {
+        let winningNumber = getWinningNumber(randomDeg);
+        resultBox.innerText = `You rolled: ${winningNumber}`;
+        
+        const bigWin = [171];
+        const mediumPrizes = [3465, 231, 5678, 9876];
+        const smallPrizes = [1234, 6531, 1098, 5468, 7638];
+
+        if (bigWin.includes(winningNumber)) {
+          messageBox.innerText = "BIG WINNER 🏆 Tropical Vacation!";
+          messageBox.style.color = "gold";
+        } else if (mediumPrizes.includes(winningNumber)) {
+          messageBox.innerText = "SECOND PRIZE! Free Ice Cream or Custom Merch";
+          messageBox.style.color = "cyan";
+        } else if (smallPrizes.includes(winningNumber)) {
+          messageBox.innerText = "Congrats on the prize! Free Scoops or Discounts";
+          messageBox.style.color = "green";
+        } else {
+          messageBox.innerText = "Better luck next time!";
+          messageBox.style.color = "red";
+        }
+      }, 3000); // Wait for the animation to finish before displaying the result
+    }
+
+    function getWinningNumber(rotation) {
+      const sections = [171, 3465, 231, 5678];
+      const sectionIndex = Math.floor((rotation % 360) / 90); // Determine which section based on rotation
+      return sections[sectionIndex];
     }
   </script>
 </body>
