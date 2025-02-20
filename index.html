@@ -14,8 +14,8 @@
       align-items: center;
       height: 100vh;
       margin: 0;
-      justify-content: space-between;
       text-align: center;
+      justify-content: space-between;
     }
     .prize-box {
       position: absolute;
@@ -61,6 +61,15 @@
       color: black;
       margin-top: 20px;
       text-align: center;
+      margin-bottom: 20px; /* Added margin at the bottom */
+    }
+    /* Add flex-grow to center everything vertically */
+    .main-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      flex-grow: 1;
     }
   </style>
 </head>
@@ -72,18 +81,18 @@
     <p>Small Prize: Free scoops or discounts!</p>
   </div>
 
-  <!-- Center the wheel container -->
-  <div class="lotto-container" id="lotto-container" style="flex-grow: 1; display: flex; align-items: center; justify-content: center;">
-    <div class="column" id="col1">0</div>
-    <div class="column" id="col2">0</div>
-    <div class="column" id="col3">0</div>
-    <div class="column" id="col4">0</div>
-    <div class="column" id="col5">0</div>
+  <div class="main-container">
+    <div class="lotto-container" id="lotto-container">
+      <div class="column" id="col1">0</div>
+      <div class="column" id="col2">0</div>
+      <div class="column" id="col3">0</div>
+      <div class="column" id="col4">0</div>
+      <div class="column" id="col5">0</div>
+    </div>
+
+    <button class="btn" id="spin-btn" onclick="generateNumber()">Spin the Lotto!</button>
   </div>
 
-  <button class="btn" id="spin-btn" onclick="generateNumber()">Spin the Lotto!</button>
-
-  <!-- Move description to the bottom -->
   <p class="description">Press the button to spin the lotto! Each column will land on a random number, forming a five-digit combination. Match the winning numbers for a chance to win BIG PRIZES!</p>
 
   <div id="result"></div>
