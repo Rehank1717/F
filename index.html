@@ -6,9 +6,9 @@
   <title>RNG Wheel</title>
   <style>
     body {
-      background: url('https://api.deepai.org/job-view-file/b5a51bb7-3609-40bf-bddb-45e6c063b4c5/outputs/output.jpg') no-repeat center center;
-      background-size: cover; /* Makes the image cover the entire screen while maintaining aspect ratio */
-      background-attachment: fixed; /* Keeps the image fixed in place when scrolling */
+      background: url('https://api.deepai.org/job-view-file/961beba4-f3de-4425-a308-9627f9e5ba9f/outputs/output.jpg') no-repeat center center;
+      background-size: cover;
+      background-attachment: fixed;
       font-family: Arial, sans-serif;
       display: flex;
       justify-content: center;
@@ -110,7 +110,7 @@
       let randomNum = Math.floor(Math.random() * 10000) + 1;
 
       // Rotate the wheel smoothly
-      let randomRotation = Math.floor(Math.random() * 360) + 1440; // Ensures multiple full spins
+      let randomRotation = Math.floor(Math.random() * 360) + 1440;
       wheel.style.transform = `rotate(${randomRotation}deg)`;
 
       // Winning numbers and messages
