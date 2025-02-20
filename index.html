@@ -26,43 +26,21 @@
       border-radius: 5px;
       font-size: 14px;
     }
-    .wheel-container {
-      margin-top: 120px; /* Move the wheel container further down */
+    .lotto-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 100px;
     }
-    .wheel {
-      width: 200px;
-      height: 200px;
-      border-radius: 50%;
-      border: 5px solid black;
-      position: relative;
-      margin-bottom: 20px;
-      overflow: hidden;
-      background-color: #f4f4f4;
-    }
-    .wheel-inner {
-      position: absolute;
-      width: 100%;
-      height: 100%;
+    .column {
+      width: 50px;
+      height: 100px;
+      border: 2px solid black;
+      margin: 0 5px;
       display: flex;
       justify-content: center;
       align-items: center;
-      transform-origin: center;
-      transition: transform 3s ease-out;
-    }
-    .wheel-section {
-      width: 50%;
-      height: 50%;
-      position: absolute;
-      top: 0;
-      left: 50%;
-      transform-origin: 0% 100%;
-      text-align: center;
-      padding-top: 20px;
-    }
-    .wheel-section span {
-      display: block;
-      font-size: 18px;
-      color: black;
+      font-size: 36px;
+      background-color: white;
     }
     .btn {
       background-color: #ff0000;
@@ -97,63 +75,52 @@
     <p>Small Prizes: Free Scoops or Discounts - 1234, 6531, 1098, 5468, 7638</p>
   </div>
 
-  <div class="wheel-container">
-    <div class="wheel" id="wheel">
-      <div class="wheel-inner" id="wheel-inner">
-        <div class="wheel-section" style="transform: rotate(0deg);"><span>0171</span></div>
-        <div class="wheel-section" style="transform: rotate(90deg);"><span>3465</span></div>
-        <div class="wheel-section" style="transform: rotate(180deg);"><span>0231</span></div>
-        <div class="wheel-section" style="transform: rotate(270deg);"><span>5678</span></div>
-      </div>
-    </div>
-    <button class="btn" id="spin-btn" onclick="spinWheel()">Spin the Wheel!</button>
-    <div id="result"></div>
-    <div id="winning-message"></div>
+  <div class="lotto-container" id="lotto-container">
+    <div class="column" id="col1">0</div>
+    <div class="column" id="col2">0</div>
+    <div class="column" id="col3">0</div>
+    <div class="column" id="col4">0</div>
   </div>
+  <button class="btn" id="spin-btn" onclick="generateNumber()">Spin the Lotto!</button>
+  <div id="result"></div>
+  <div id="winning-message"></div>
 
-  <p class="description">Press the button to spin the wheel! Get a random number and match it with the winning numbers to win amazing prizes!</p>
+  <p class="description">Press the button to spin the lotto! Each column will land on a random number, forming a four-digit combination. Match the winning numbers for a chance to win BIG PRIZES!</p>
 
   <script>
-    function spinWheel() {
-      let wheel = document.getElementById('wheel-inner');
+    function generateNumber() {
+      let spinButton = document.getElementById('spin-btn');
       let resultBox = document.getElementById('result');
       let messageBox = document.getElementById('winning-message');
 
-      // Generate a random angle between 0 and 360 to rotate the wheel
-      let randomDeg = Math.floor(Math.random() * 360) + 3600; // 3600 to ensure it spins at least 10 times
+      // Generate a four-digit number
+      let randomNum = '';
+      for (let i = 1; i <= 4; i++) {
+        let digit = Math.floor(Math.random() * 10);
+        document.getElementById(`col${i}`).innerText = digit;
+        randomNum += digit;
+      }
+      randomNum = parseInt(randomNum);
 
-      // Rotate the wheel
-      wheel.style.transform = `rotate(${randomDeg}deg)`;
+      resultBox.innerText = `You rolled: ${randomNum}`;
+      
+      const bigWin = [171];
+      const secondPrize = [3465, 231, 5678, 9876];
+      const smallPrize = [1234, 6531, 1098, 5468, 7638];
 
-      // After spinning, get the result based on the degrees
-      setTimeout(function() {
-        let winningNumber = getWinningNumber(randomDeg);
-        resultBox.innerText = `You rolled: ${winningNumber}`;
-        
-        const bigWin = [171];
-        const mediumPrizes = [3465, 231, 5678, 9876];
-        const smallPrizes = [1234, 6531, 1098, 5468, 7638];
-
-        if (bigWin.includes(winningNumber)) {
-          messageBox.innerText = "BIG WINNER 🏆 Tropical Vacation!";
-          messageBox.style.color = "gold";
-        } else if (mediumPrizes.includes(winningNumber)) {
-          messageBox.innerText = "SECOND PRIZE! Free Ice Cream or Custom Merch";
-          messageBox.style.color = "cyan";
-        } else if (smallPrizes.includes(winningNumber)) {
-          messageBox.innerText = "Congrats on the prize! Free Scoops or Discounts";
-          messageBox.style.color = "green";
-        } else {
-          messageBox.innerText = "Better luck next time!";
-          messageBox.style.color = "red";
-        }
-      }, 3000); // Wait for the animation to finish before displaying the result
-    }
-
-    function getWinningNumber(rotation) {
-      const sections = [171, 3465, 231, 5678];
-      const sectionIndex = Math.floor((rotation % 360) / 90); // Determine which section based on rotation
-      return sections[sectionIndex];
+      if (bigWin.includes(randomNum)) {
+        messageBox.innerText = "BIG WINNER 🏆";
+        messageBox.style.color = "gold";
+      } else if (secondPrize.includes(randomNum)) {
+        messageBox.innerText = "SECOND PRIZE";
+        messageBox.style.color = "cyan";
+      } else if (smallPrize.includes(randomNum)) {
+        messageBox.innerText = "Congrats on the prize 😄";
+        messageBox.style.color = "green";
+      } else {
+        messageBox.innerText = "Better luck next time!";
+        messageBox.style.color = "red";
+      }
     }
   </script>
 </body>
