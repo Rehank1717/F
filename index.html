@@ -61,9 +61,8 @@
       color: black;
       margin-top: 20px;
       text-align: center;
-      margin-bottom: 20px; /* Added margin at the bottom */
+      margin-bottom: 20px;
     }
-    /* Add flex-grow to center everything vertically */
     .main-container {
       display: flex;
       flex-direction: column;
@@ -76,9 +75,9 @@
 <body>
   <div class="prize-box">
     <p><strong>Winning Numbers:</strong></p>
-    <p>Large Prize: A tropical vacation!</p>
-    <p>Medium Prize: Free ice cream for a month or custom merch!</p>
-    <p>Small Prize: Free scoops or discounts!</p>
+    <p>Big Prize: 0171</p>
+    <p>Medium Prize: 3465, 0231, 5678, 9876</p>
+    <p>Small Prize: 1234, 6531, 1098, 5468, 7638</p>
   </div>
 
   <div class="main-container">
@@ -87,13 +86,12 @@
       <div class="column" id="col2">0</div>
       <div class="column" id="col3">0</div>
       <div class="column" id="col4">0</div>
-      <div class="column" id="col5">0</div>
     </div>
 
     <button class="btn" id="spin-btn" onclick="generateNumber()">Spin the Lotto!</button>
   </div>
 
-  <p class="description">Press the button to spin the lotto! Each column will land on a random number, forming a five-digit combination. Match the winning numbers for a chance to win BIG PRIZES!</p>
+  <p class="description">Press the button to spin the lotto! Each column will land on a random number, forming a four-digit combination. Match the winning numbers for a chance to win BIG PRIZES!</p>
 
   <div id="result"></div>
   <div id="winning-message"></div>
@@ -106,9 +104,9 @@
         let resultBox = document.getElementById('result');
         let messageBox = document.getElementById('winning-message');
 
-        // Generate a five-digit number
+        // Generate a four-digit number
         let randomNum = '';
-        for (let i = 1; i <= 5; i++) {
+        for (let i = 1; i <= 4; i++) {
           let digit = Math.floor(Math.random() * 10);
           document.getElementById(`col${i}`).innerText = digit;
           randomNum += digit;
@@ -118,9 +116,9 @@
 
         resultBox.innerText = `You rolled: ${randomNum}`;
         
-        const bigWin = [171];
-        const secondPrize = [1, 3400, 2650, 10000];
-        const smallPrize = [2, 3673, 6476, 7602, 47];
+        const bigWin = [171]; // Big Prize
+        const secondPrize = [3465, 231, 5678, 9876]; // Medium Prize
+        const smallPrize = [1234, 6531, 1098, 5468, 7638]; // Small Prize
 
         if (bigWin.includes(randomNum)) {
           messageBox.innerText = "BIG WINNER 🏆";
