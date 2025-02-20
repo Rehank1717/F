@@ -9,36 +9,37 @@
       background-size: cover;
       font-family: Arial, sans-serif;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
       height: 100vh;
       margin: 0;
       text-align: center;
-      color: white;
-      flex-direction: column;
     }
-    .container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+    .prize-box {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background-color: black;
+      color: white;
+      padding: 10px;
+      border-radius: 5px;
+      font-size: 14px;
     }
     .lotto-container {
       display: flex;
-      gap: 10px;
-      margin-bottom: 20px;
+      justify-content: center;
+      margin-top: 50px;
     }
     .column {
-      width: 60px;
-      height: 80px;
-      background-color: #003366;
-      color: white;
-      font-size: 36px;
-      font-weight: bold;
+      width: 50px;
+      height: 100px;
+      border: 2px solid black;
+      margin: 0 5px;
       display: flex;
       justify-content: center;
       align-items: center;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      font-size: 36px;
+      background-color: white;
     }
     .btn {
       background-color: #ff0000;
@@ -53,57 +54,44 @@
     .btn:hover {
       background-color: #ff4d4d;
     }
-    #result {
-      font-size: 24px;
-      font-weight: bold;
-      padding: 20px;
-      border-radius: 10px;
+    .description {
+      font-size: 12px;
+      color: black;
       margin-top: 20px;
+      text-align: center;
     }
-    #winning-message {
-      font-size: 26px;
-      font-weight: bold;
-      margin-top: 20px;
-    }
-    .big-win { color: gold; }
-    .second-prize { color: cyan; }
-    .small-prize { color: green; }
-    .lose { color: red; }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="lotto-container" id="lotto-container">
-      <div class="column" id="col1">0</div>
-      <div class="column" id="col2">0</div>
-      <div class="column" id="col3">0</div>
-      <div class="column" id="col4">0</div>
-      <div class="column" id="col5">0</div>
-    </div>
-    <button class="btn" id="spin-btn" onclick="generateNumber()">Spin the Lotto!</button>
-    <div id="result"></div>
-    <div id="winning-message"></div>
-  </div>  <script>
+  <div class="prize-box">
+    <p><strong>Winning Numbers:</strong></p>
+    <p>Large Prize: A tropical vacation!</p>
+    <p>Medium Prize: Free ice cream for a month or custom merch!</p>
+    <p>Small Prize: Free scoops or discounts!</p>
+  </div>  <div class="lotto-container" id="lotto-container">
+    <div class="column" id="col1">0</div>
+    <div class="column" id="col2">0</div>
+    <div class="column" id="col3">0</div>
+    <div class="column" id="col4">0</div>
+    <div class="column" id="col5">0</div>
+  </div>
+  <button class="btn" id="spin-btn" onclick="generateNumber()">Spin the Lotto!</button>
+  <div id="result"></div>
+  <div id="winning-message"></div>  <p class="description">Press the button to spin the lotto! Each column will land on a random number, forming a five-digit combination. Match the winning numbers for a chance to win BIG PRIZES!</p>  <script>
     function generateNumber() {
       let spinButton = document.getElementById('spin-btn');
       let resultBox = document.getElementById('result');
       let messageBox = document.getElementById('winning-message');
-      let columns = [
-        document.getElementById('col1'),
-        document.getElementById('col2'),
-        document.getElementById('col3'),
-        document.getElementById('col4'),
-        document.getElementById('col5')
-      ];
-      
-      let number = '';
-      columns.forEach(col => {
-        let randomDigit = Math.floor(Math.random() * 10);
-        col.innerText = randomDigit;
-        number += randomDigit;
-      });
-      
-      let randomNum = parseInt(number, 10);
+
+      // Generate a five-digit number
+      let randomNum = '';
+      for (let i = 1; i <= 5; i++) {
+        let digit = Math.floor(Math.random() * 10);
+        document.getElementById(`col${i}`).innerText = digit;
+        randomNum += digit;
+      }
+      randomNum = parseInt(randomNum);
+
       resultBox.innerText = `You rolled: ${randomNum}`;
       
       const bigWin = [171];
@@ -112,16 +100,16 @@
 
       if (bigWin.includes(randomNum)) {
         messageBox.innerText = "BIG WINNER 🏆";
-        messageBox.className = "big-win";
+        messageBox.style.color = "gold";
       } else if (secondPrize.includes(randomNum)) {
         messageBox.innerText = "SECOND PRIZE";
-        messageBox.className = "second-prize";
+        messageBox.style.color = "cyan";
       } else if (smallPrize.includes(randomNum)) {
         messageBox.innerText = "Congrats on the prize 😄";
-        messageBox.className = "small-prize";
+        messageBox.style.color = "green";
       } else {
         messageBox.innerText = "Better luck next time!";
-        messageBox.className = "lose";
+        messageBox.style.color = "red";
       }
     }
   </script></body>
