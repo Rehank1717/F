@@ -6,31 +6,21 @@
   <style>
     body {
       background: url('https://api.deepai.org/job-view-file/961beba4-f3de-4425-a308-9627f9e5ba9f/outputs/output.jpg') no-repeat center center fixed;
-      background-size: 100% 100%;
+      background-size: cover;
       font-family: Arial, sans-serif;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       height: 100vh;
       margin: 0;
       text-align: center;
       color: white;
-      flex-direction: column;
-    }
-    .info-box {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      background: rgba(0, 0, 0, 0.7);
-      padding: 10px;
-      border-radius: 8px;
-      font-size: 14px;
     }
     .container {
       display: flex;
       flex-direction: column;
       align-items: center;
-      margin-top: 50px;
     }
     .wheel {
       width: 200px;
@@ -88,22 +78,27 @@
     .second-prize { color: cyan; }
     .small-prize { color: green; }
     .lose { color: red; }
-    .description {
-      margin-top: 50px;
-      font-size: 14px;
+    .prize-box {
+      position: absolute;
+      top: 10px;
+      left: 10px;
       background: rgba(0, 0, 0, 0.7);
       padding: 10px;
-      border-radius: 8px;
-      width: 80%;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+    .description {
+      font-size: 12px;
+      margin-top: 20px;
     }
   </style>
 </head>
 <body>
-  <div class="info-box">
-    <strong>Winning Numbers:</strong><br>
-    <strong>Large:</strong> 171 - A tropical vacation!<br>
-    <strong>Medium:</strong> 1, 3400, 2650, 10000 - Free ice cream for a month or merch<br>
-    <strong>Small:</strong> 2, 3673, 6476, 7602, 47 - Free scoops or discounts
+  <div class="prize-box">
+    <p><strong>Winning Numbers:</strong></p>
+    <p><strong>Large Prize:</strong> A tropical vacation!</p>
+    <p><strong>Medium Prize:</strong> Free ice cream for a month or custom merch!</p>
+    <p><strong>Small Prize:</strong> Free scoops or discounts!</p>
   </div>
   <div class="container">
     <div class="wheel" id="wheel">
@@ -113,36 +108,31 @@
     <div id="result"></div>
     <div id="winning-message"></div>
   </div>
-  <div class="description">
-    <p>Spin the wheel for a chance to win amazing prizes! Each spin generates a random number between 1 and 10,000. If your number matches one of the winning numbers, you could win a small, medium, or even a <strong>BIG PRIZE!</strong> Try your luck now!</p>
-  </div>
+  <p class="description">Spin the wheel for a chance to win a <strong>BIG PRIZE</strong>! Will you be the lucky winner?</p>
   <script>
     function generateNumber() {
       let spinButton = document.getElementById('spin-btn');
       let wheel = document.getElementById('wheel');
       let wheelNumber = document.getElementById('wheel-number');
       let resultBox = document.getElementById('result');
-      let messageBox = document.getElementById('winning-message');// Disable the button temporarily
-  spinButton.disabled = true;
-
-  // Generate a random number between 1 and 10,000
+      let messageBox = document.getElementById('winning-message');// Generate a random number between 1 and 10,000
   let randomNum = Math.floor(Math.random() * 10000) + 1;
-
-  // Rotate the wheel at a faster speed
-  let randomRotation = Math.floor(Math.random() * 360) + 2880; // More rotations for faster effect
+  
+  // Rotate the wheel quickly
+  let randomRotation = Math.floor(Math.random() * 360) + 2880; // More spins
   wheel.style.transition = "transform 0.5s ease-out";
   wheel.style.transform = `rotate(${randomRotation}deg)`;
-
+  
   // Winning numbers and messages
   const bigWin = [171];
   const secondPrize = [1, 3400, 2650, 10000];
   const smallPrize = [2, 3673, 6476, 7602, 47];
-
+  
   // Delay revealing the number until after the spin animation
   setTimeout(() => {
     wheelNumber.innerText = randomNum;
     resultBox.innerText = `You rolled: ${randomNum}`;
-
+    
     if (bigWin.includes(randomNum)) {
       messageBox.innerText = "BIG WINNER 🏆";
       messageBox.className = "big-win";
@@ -156,9 +146,6 @@
       messageBox.innerText = "Better luck next time!";
       messageBox.className = "lose";
     }
-
-    // Re-enable the button after spin
-    spinButton.disabled = false;
   }, 500);
 }
 
